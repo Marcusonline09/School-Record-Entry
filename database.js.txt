@@ -1,0 +1,51 @@
+const db = require('./db');
+
+const database = {
+  addStudent: (student) => {
+    const query = 'INSERT INTO students SET ?';
+    db.query(query, student, (err, results) => {
+      if (err) {
+        console.error('error adding student:', err);
+      } else {
+        console.log('student added successfully');
+      }
+    });
+  },
+
+  getStudents: () => {
+    const query = 'SELECT * FROM students';
+    db.query(query, (err, results) => {
+      if (err) {
+        console.error('error getting students:', err);
+      } else {
+        console.log('students retrieved successfully');
+        return results;
+      }
+    });
+  },
+
+  addRecord: (record) => {
+    const query = 'INSERT INTO records SET ?';
+    db.query(query, record, (err, results) => {
+      if (err) {
+        console.error('error adding record:', err);
+      } else {
+        console.log('record added successfully');
+      }
+    });
+  },
+
+  getRecords: (studentId) => {
+    const query = 'SELECT * FROM records WHERE student_id = ?';
+    db.query(query, studentId, (err, results) => {
+      if (err) {
+        console.error('error getting records:', err);
+      } else {
+        console.log('records retrieved successfully');
+        return results;
+      }
+    });
+  }
+};
+
+module.exports = database;

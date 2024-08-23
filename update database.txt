@@ -1,0 +1,31 @@
+const database = require('./database');
+
+// ...
+
+// Add student
+const student = {
+  name: document.getElementById('student-name').value,
+  student_id: document.getElementById('student-id').value,
+  class: document.getElementById('student-class').value,
+  section: document.getElementById('student-section').value,
+  address: document.getElementById('student-address').value
+};
+
+database.addStudent(student);
+
+// Get students
+const students = database.getStudents();
+console.log(students);
+
+// Add record
+const record = {
+  student_id: document.getElementById('student-id').value,
+  record_date: new Date(),
+  record_text: document.getElementById('record-text').value
+};
+
+database.addRecord(record);
+
+// Get records
+const records = database.getRecords(document.getElementById('student-id').value);
+console.log(records);
