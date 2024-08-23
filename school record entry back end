@@ -1,0 +1,125 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class SchoolRecordEntrySystem {
+    private JFrame frame;
+    private JTextField studentNameField, studentIDField, studentClassField, studentSectionField;
+    private JTextArea studentAddressField;
+    private JButton addButton, viewButton, clearButton, exitButton;
+    private DefaultTableModel tableModel;
+    private JTable table;
+
+    public SchoolRecordEntrySystem() {
+        createGUI();
+    }
+
+    private void createGUI() {
+        frame = new JFrame("School Record Entry System");
+        frame.setSize(800, 600);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5, 2));
+
+        JLabel studentNameLabel = new JLabel("Student Name:");
+        panel.add(studentNameLabel);
+        studentNameField = new JTextField();
+        panel.add(studentNameField);
+
+        JLabel studentIDLabel = new JLabel("Student ID:");
+        panel.add(studentIDLabel);
+        studentIDField = new JTextField();
+        panel.add(studentIDField);
+
+        JLabel studentClassLabel = new JLabel("Student Class:");
+        panel.add(studentClassLabel);
+        studentClassField = new JTextField();
+        panel.add(studentClassField);
+
+        JLabel studentSectionLabel = new JLabel("Student Section:");
+        panel.add(studentSectionLabel);
+        studentSectionField = new JTextField();
+        panel.add(studentSectionField);
+
+        JLabel studentAddressLabel = new JLabel("Student Address:");
+        panel.add(studentAddressLabel);
+        studentAddressField = new JTextArea(5, 20);
+        panel.add(studentAddressField);
+
+        addButton = new JButton("Add");
+        addButton.addActionListener(new AddButtonListener());
+        panel.add(addButton);
+
+        viewButton = new JButton("View");
+        viewButton.addActionListener(new ViewButtonListener());
+        panel.add(viewButton);
+
+        clearButton = new JButton("Clear");
+        clearButton.addActionListener(new ClearButtonListener());
+        panel.add(clearButton);
+
+        exitButton = new JButton("Exit");
+        exitButton.addActionListener(new ExitButtonListener());
+        panel.add(exitButton);
+
+        tableModel = new DefaultTableModel(new String[] {"Student Name", "Student ID", "Student Class", "Student Section", "Student Address"}, 0);
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+        frame.add(panel, BorderLayout.NORTH);
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        frame.setVisible(true);
+    }
+
+    private class AddButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            String studentName = studentNameField.getText();
+            String studentID = studentIDField.getText();
+            String studentClass = studentClassField.getText();
+            String studentSection = studentSectionField.getText();
+            String studentAddress = studentAddressField.getText();
+
+            tableModel.addRow(new Object[] {studentName, studentID, studentClass, studentSection, studentAddress});
+
+            studentNameField.setText("");
+            studentIDField.setText("");
+            studentClassField.setText("");
+            studentSectionField.setText("");
+            studentAddressField.setText("");
+        }
+    }
+
+    private class ViewButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            // Add code to view data from database
+        }
+    }
+
+    private class ClearButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            studentNameField.setText("");
+            studentIDField.setText("");
+            studentClassField.setText("");
+            studentSectionField.setText("");
+            studentAddressField.setText("");
+            tableModel.getDataVector().removeAllElements();
+            table.repaint();
+        }
+    }
+
+    private class ExitButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new SchoolRecordEntrySystem();
+            }
+        });
+    }
+}
