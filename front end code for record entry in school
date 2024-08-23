@@ -1,0 +1,139 @@
+// HTML (index.html)
+<!DOCTYPE html>
+<html>
+<head>
+  <title>School Record Entry System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>School Record Entry System</h1>
+  <form id="record-form">
+    <label for="student-name">Student Name:</label>
+    <input type="text" id="student-name" required><br><br>
+    <label for="student-id">Student ID:</label>
+    <input type="text" id="student-id" required><br><br>
+    <label for="student-class">Student Class:</label>
+    <input type="text" id="student-class" required><br><br>
+    <label for="student-section">Student Section:</label>
+    <input type="text" id="student-section" required><br><br>
+    <label for="student-address">Student Address:</label>
+    <textarea id="student-address" required></textarea><br><br>
+    <button id="add-button">Add Record</button>
+    <button id="view-button">View Records</button>
+    <button id="clear-button">Clear Form</button>
+  </form>
+  <div id="record-table"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+// CSS (style.css)
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#record-form {
+  width: 50%;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+#record-table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#record-table th, #record-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+// JavaScript (script.js)
+let records = [];
+
+document.getElementById('add-button').addEventListener('click', addRecord);
+document.getElementById('view-button').addEventListener('click', viewRecords);
+document.getElementById('clear-button').addEventListener('click', clearForm);
+
+function addRecord() {
+  let studentName = document.getElementById('student-name').value;
+  let studentID = document.getElementById('student-id').value;
+  let studentClass = document.getElementById('student-class').value;
+  let studentSection = document.getElementById('student-section').value;
+  let studentAddress = document.getElementById('student-address').value;
+
+  let record = {
+    studentName,
+    studentID,
+    studentClass,
+    studentSection,
+    studentAddress
+  };
+
+  records.push(record);
+  displayRecords();
+  clearForm();
+}
+
+function viewRecords() {
+  // Add code to view records from database or storage
+  console.log(records);
+}
+
+function clearForm() {
+  document.getElementById('student-name').value = '';
+  document.getElementById('student-id').value = '';
+  document.getElementById('student-class').value = '';
+  document.getElementById('student-section').value = '';
+  document.getElementById('student-address').value = '';
+}
+
+function displayRecords() {
+  let tableHTML = '<table id="record-table">';
+  tableHTML += '<tr><th>Student Name</th><th>Student ID</th><th>Student Class</th><th>Student Section</th><th>Student Address</th></tr>';
+
+  records.forEach((record) => {
+    tableHTML += `<tr>
+      <td>${record.studentName}</td>
+      <td>${record.studentID}</td>
+      <td>${record.studentClass}</td>
+      <td>${record.studentSection}</td>
+      <td>${record.studentAddress}</td>
+    </tr>`;
+  });
+
+  tableHTML += '</table>';
+  document.getElementById('record-table').innerHTML = tableHTML;
+}
